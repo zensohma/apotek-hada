@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['login'])) {
+  header('Location: login.php');
+  exit;
+
+}
 include 'config.php';
 if (isset($_POST['edit'])) {
     $id_obat = $_POST['id_obat'];
