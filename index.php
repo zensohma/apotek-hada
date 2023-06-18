@@ -1,10 +1,48 @@
 <?php
+include 'config.php';
 session_start();
 if (!isset($_SESSION['login'])) {
   header('Location: login.php');
   exit;
 
 }
+
+// Get the counts from the tables
+$obatCount = 0;
+$adminCount = 0;
+$supplierCount = 0;
+
+// Get the count from the tb_obat table
+$obatQuery = "SELECT COUNT(*) as total FROM tb_obat";
+$obatResult = mysqli_query($conn, $obatQuery);
+
+if ($obatResult) {
+  $obatRow = mysqli_fetch_assoc($obatResult);
+  $obatCount = $obatRow['total'];
+}
+
+// Get the count from the 'tb_admin' table
+$adminQuery = "SELECT COUNT(*) as total FROM tb_admin";
+$adminResult = mysqli_query($conn, $adminQuery);
+
+if ($adminResult) {
+  $adminRow = mysqli_fetch_assoc($adminResult);
+  $adminCount = $adminRow['total'];
+}
+
+// Get the count from the 'tb_supplier' table
+$supplierQuery = "SELECT COUNT(*) as total FROM tb_supplier";
+$supplierResult = mysqli_query($conn, $supplierQuery);
+
+if ($supplierResult) {
+  $supplierRow = mysqli_fetch_assoc($supplierResult);
+  $supplierCount = $supplierRow['total'];
+}
+
+// close the database connection 
+mysqli_close($conn);
+
+
 
 ?>
 
@@ -123,7 +161,7 @@ if (!isset($_SESSION['login'])) {
                 <div class="card-body">
                   <p class="card-title text-md-center text-xl-left">Jumlah Obat</p>
                   <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"></h3>
+                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?php echo $obatCount ?></h3>
                     <i class="ti-layout-list-post icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
                   </div>
                 </div>
@@ -134,7 +172,7 @@ if (!isset($_SESSION['login'])) {
                 <div class="card-body">
                   <p class="card-title text-md-center text-xl-left">Jumlah Admin</p>
                   <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"></h3>
+                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?php echo $adminCount ?></h3>
                     <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
                   </div>
                 </div>
@@ -145,7 +183,7 @@ if (!isset($_SESSION['login'])) {
                 <div class="card-body">
                   <p class="card-title text-md-center text-xl-left">Jumlah Supplier</p>
                   <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"></h3>
+                    <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?php echo $supplierCount ?></h3>
                     <i class="ti-truck icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
                   </div>  
                 </div>
